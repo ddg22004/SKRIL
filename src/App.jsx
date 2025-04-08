@@ -3,12 +3,14 @@ import { Routes, Route } from "react-router-dom";
 import { BrowserRouter } from "react-router-dom";
 import Home from "./components/landingpage/Home";
 import About from "./components/landingpage/About";
-import Chome from "./components/creatorhomepage/Chome";
 import Login from "./components/loginsignup/Login";
-import Dashboard from "./components/creatorhomepage/Dashboard";
+import Feature from "./components/landingpage/Feature";
 import Settings from "./components/creatorhomepage/Settings";
 import Project from "./components/creatorhomepage/Project";
-// Simulated login state (replace with actual authentication logic)
+import Chome from "./components/creatorhomepage/Chome";
+import AddprojectForm from "./components/creatorhomepage/AddprojectForm";
+import Contact from "./components/landingpage/Contact";
+
 const isLoggedIn = true; // Change this value to simulate login/logout
 
 // Protected Route Component
@@ -24,6 +26,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
+        <Route path='/features' element={<Feature/>}/>
+        <Route path="/contact" element={<Contact/>} />
 
         {/* Protected Routes */}
         <Route
@@ -34,14 +38,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
+       
         <Route
           path="/settings"
           element={
@@ -58,6 +55,23 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/addproject"
+          element={
+            <ProtectedRoute>
+              <AddprojectForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute>
+              <Settings />
+            </ProtectedRoute>
+          }
+        />
+
       </Routes>
     </BrowserRouter>
   );

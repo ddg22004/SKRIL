@@ -7,8 +7,8 @@ const Navbar = () => {
       <div className='flex justify-center'>
       <Link to='/' className='mx-3 '>Home</Link>
       <Link to='/about' className='mx-3'>About</Link>
-      <Link className='mx-3'>Features</Link>
-      <Link className='mx-3'>Contact</Link>
+      <Link className='mx-3' to='/features'>Features</Link>
+      <Link className='mx-3' to='/contact'>Contact</Link>
       </div><Link to='/login' className='mx-3'>Login/SignUp</Link>
     </nav>
   

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../landingpage/Footer";
-import AddprojectForm from "./AddprojectForm";
+import Sidebar from "./Sidebar";
+
+
 
 const Data = [
   {
@@ -30,104 +32,115 @@ const Data = [
   },
   { name: "Project 2", date: "12/12/2021" },
 ];
-const ProfileSection = () => {
+const Dashboard = () => {
+  const projects = new Array(7).fill("Project Name");
+
   return (
-    <div className="bg-zinc-900 p-5 flex flex-col items-center m-5 rounded-2xl lg:text-2xl sm:text-md">
-      <svg
-        width="86"
-        height="86"
-        viewBox="0 0 86 86"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <g filter="url(#filter0_d_25_1645)">
-          <circle cx="43" cy="43" r="30" fill="#D9D9D9" />
-        </g>
-        <defs>
-          <filter
-            id="filter0_d_25_1645"
-            x="0"
-            y="0"
-            width="86"
-            height="86"
-            filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB"
-          >
-            <feFlood flood-opacity="0" result="BackgroundImageFix" />
-            <feColorMatrix
-              in="SourceAlpha"
-              type="matrix"
-              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-              result="hardAlpha"
-            />
-            <feMorphology
-              radius="3"
-              operator="dilate"
-              in="SourceAlpha"
-              result="effect1_dropShadow_25_1645"
-            />
-            <feOffset />
-            <feGaussianBlur stdDeviation="5" />
-            <feComposite in2="hardAlpha" operator="out" />
-            <feColorMatrix
-              type="matrix"
-              values="0 0 0 0 0.346392 0 0 0 0 0.351667 0 0 0 0 0.349557 0 0 0 1 0"
-            />
-            <feBlend
-              mode="normal"
-              in2="BackgroundImageFix"
-              result="effect1_dropShadow_25_1645"
-            />
-            <feBlend
-              mode="normal"
-              in="SourceGraphic"
-              in2="effect1_dropShadow_25_1645"
-              result="shape"
-            />
-          </filter>
-        </defs>
-      </svg>
+    <div className="flex-1 p-6 bg-gradient-to-b from-black to-zinc min-h-screen">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {/* + Add Project card - already done by you */}
 
-      <h1 className="mt-5 ">John Doe</h1>
-      <h1 className="mb-5 sm:text-xs">johndoe@gmail.com</h1>
-      <div className="flex flex-col items-center text-center text-black font-bold sm:text-sm">
-        <Link
-          to="/create"
-          className=" bg-zinc-400 p-3 rounded-lg m-2 w-36 hover:bg-white"
-        >
-          Projects
-        </Link>
-        <Link className=" bg-zinc-400 p-3 rounded-lg m-2 w-36 hover:bg-white" to='/dashboard'>
-          Dashboard
-        </Link>
-        <Link className=" bg-zinc-400 p-3 rounded-lg m-2 w-36 hover:bg-white">
-          Calendar
-        </Link>
-        <Link className=" bg-zinc-400 p-3 rounded-lg m-2 w-36 hover:bg-white">
-          Team Members
-        </Link>
-        <Link className=" bg-zinc-400 p-3 rounded-lg m-2 w-36 hover:bg-white">
-          Settings
-        </Link>
+        {/* Project Cards */}
+        {projects.map((project, index) => (
+          <Link
+            key={index}
+            className="bg-zinc-900 rounded-2xl p-4 shadow-md relative h-40 flex flex-col justify-between"
+          to='/project'>
+            {/* Top: Project Name and Status Dot */}
+            <div className="flex justify-between items-center">
+              <h2 className="text-white text-lg font-semibold">{project}</h2>
+              <span className="h-3 w-3 bg-green-400 rounded-full"></span>
+            </div>
+            <div className="items-center flex justify-center">
+            <svg width="135" height="78" viewBox="0 0 135 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_d_146_307)">
+<circle cx="103.124" cy="39" r="23" fill="#D9D9D9"/>
+</g>
+<g filter="url(#filter1_d_146_307)">
+<circle cx="87.124" cy="39" r="24" fill="#D9D9D9"/>
+</g>
+<g filter="url(#filter2_d_146_307)">
+<circle cx="31.1257" cy="39.0746" r="23" transform="rotate(179.671 31.1257 39.0746)" fill="#D9D9D9"/>
+</g>
+<g filter="url(#filter3_d_146_307)">
+<circle cx="47.1254" cy="38.9713" r="24" transform="rotate(179.671 47.1254 38.9713)" fill="#D9D9D9"/>
+</g>
+<g filter="url(#filter4_d_146_307)">
+<circle cx="67" cy="39" r="26" fill="#D9D9D9"/>
+</g>
+<path d="M73.2406 28.6C73.2406 25.2595 70.3411 22.36 67.0006 22.36C63.6601 22.36 60.7606 25.2595 60.7606 28.6C60.7606 31.9405 63.6601 34.84 67.0006 34.84C70.3411 34.84 73.2406 31.9405 73.2406 28.6ZM67.0006 36.92C61.5343 36.92 56.6006 42.8168 56.6006 50.1447C56.6006 57.4725 77.4006 57.4725 77.4006 50.1447C77.4006 42.8168 72.4668 36.92 67.0006 36.92Z" fill="#343434"/>
+<defs>
+<filter id="filter0_d_146_307" x="72.124" y="8" width="62" height="62" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feMorphology radius="1" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_146_307"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="3.5"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.101667 0 0 0 0 0.101667 0 0 0 0 0.101667 0 0 0 1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_146_307"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_146_307" result="shape"/>
+</filter>
+<filter id="filter1_d_146_307" x="55.124" y="7" width="64" height="64" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feMorphology radius="1" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_146_307"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="3.5"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.101667 0 0 0 0 0.101667 0 0 0 0 0.101667 0 0 0 1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_146_307"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_146_307" result="shape"/>
+</filter>
+<filter id="filter2_d_146_307" x="0.125488" y="8.07458" width="62.0005" height="62" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feMorphology radius="1" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_146_307"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="3.5"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.101667 0 0 0 0 0.101667 0 0 0 0 0.101667 0 0 0 1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_146_307"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_146_307" result="shape"/>
+</filter>
+<filter id="filter3_d_146_307" x="15.1255" y="6.97131" width="64" height="64" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feMorphology radius="1" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_146_307"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="3.5"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.101667 0 0 0 0 0.101667 0 0 0 0 0.101667 0 0 0 1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_146_307"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_146_307" result="shape"/>
+</filter>
+<filter id="filter4_d_146_307" x="28" y="0" width="78" height="78" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feMorphology radius="3" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_146_307"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="5"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.346392 0 0 0 0 0.351667 0 0 0 0 0.349557 0 0 0 1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_146_307"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_146_307" result="shape"/>
+</filter>
+</defs>
+</svg>
+</div>
+           
+          </Link>
+        ))}
       </div>
-
-      <h1 className="lg:mt-20 sm:mt-32">SKRIL</h1>
     </div>
   );
 };
+
 const AddProject = () => {
-  const [showAddProject, setShowAddProject] = useState(false);
-  const [showRest, setshowRest] = useState(true);
-  function handleAddproject(){
-    setShowAddProject(true);
-    setshowRest(false);
-  }
+ 
   return (
-    <div>
-      <button onClick={handleAddproject} >
-      {
-showAddProject && <AddprojectForm />}
-        {showRest &&
+    <div className="ml-4">
+        
         <svg
           width="244"
           viewBox="0 0 245 158"
@@ -230,259 +243,19 @@ showAddProject && <AddprojectForm />}
               />
             </filter>
           </defs>
-        </svg>}
-       
-      </button>
+        </svg>
     </div>
   );
 };
 const Project = ({ data }) => {
   return (
-    <Link className="bg-zinc-900 m-3 p-2 w-56 h-36 rounded-lg" to='/project'>
+    <Link className=" m-3 p-2 w-56 h-36 rounded-lg" to='/project'>
       <h1 className="text-center font-bold">{data.name}</h1>
       <div className="flex justify-center">
-        <svg
-          width="135"
-          height="54"
-          viewBox="0 0 135 68"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g filter="url(#filter0_d_35_567)">
-            <circle cx="103.124" cy="34" r="23" fill="#D9D9D9" />
-          </g>
-          <g filter="url(#filter1_d_35_567)">
-            <circle cx="87.124" cy="34" r="24" fill="#D9D9D9" />
-          </g>
-          <g filter="url(#filter2_d_35_567)">
-            <circle
-              cx="31.1257"
-              cy="34.0746"
-              r="23"
-              transform="rotate(179.671 31.1257 34.0746)"
-              fill="#D9D9D9"
-            />
-          </g>
-          <g filter="url(#filter3_d_35_567)">
-            <circle
-              cx="47.1254"
-              cy="33.9713"
-              r="24"
-              transform="rotate(179.671 47.1254 33.9713)"
-              fill="#D9D9D9"
-            />
-          </g>
-          <g filter="url(#filter4_d_35_567)">
-            <circle cx="67.124" cy="34" r="26" fill="#D9D9D9" />
-          </g>
-          <defs>
-            <filter
-              id="filter0_d_35_567"
-              x="72.124"
-              y="3"
-              width="62"
-              height="62"
-              filterUnits="userSpaceOnUse"
-              color-interpolation-filters="sRGB"
-            >
-              <feFlood flood-opacity="0" result="BackgroundImageFix" />
-              <feColorMatrix
-                in="SourceAlpha"
-                type="matrix"
-                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                result="hardAlpha"
-              />
-              <feMorphology
-                radius="1"
-                operator="dilate"
-                in="SourceAlpha"
-                result="effect1_dropShadow_35_567"
-              />
-              <feOffset />
-              <feGaussianBlur stdDeviation="3.5" />
-              <feComposite in2="hardAlpha" operator="out" />
-              <feColorMatrix
-                type="matrix"
-                values="0 0 0 0 0.101667 0 0 0 0 0.101667 0 0 0 0 0.101667 0 0 0 1 0"
-              />
-              <feBlend
-                mode="normal"
-                in2="BackgroundImageFix"
-                result="effect1_dropShadow_35_567"
-              />
-              <feBlend
-                mode="normal"
-                in="SourceGraphic"
-                in2="effect1_dropShadow_35_567"
-                result="shape"
-              />
-            </filter>
-            <filter
-              id="filter1_d_35_567"
-              x="55.124"
-              y="2"
-              width="64"
-              height="64"
-              filterUnits="userSpaceOnUse"
-              color-interpolation-filters="sRGB"
-            >
-              <feFlood flood-opacity="0" result="BackgroundImageFix" />
-              <feColorMatrix
-                in="SourceAlpha"
-                type="matrix"
-                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                result="hardAlpha"
-              />
-              <feMorphology
-                radius="1"
-                operator="dilate"
-                in="SourceAlpha"
-                result="effect1_dropShadow_35_567"
-              />
-              <feOffset />
-              <feGaussianBlur stdDeviation="3.5" />
-              <feComposite in2="hardAlpha" operator="out" />
-              <feColorMatrix
-                type="matrix"
-                values="0 0 0 0 0.101667 0 0 0 0 0.101667 0 0 0 0 0.101667 0 0 0 1 0"
-              />
-              <feBlend
-                mode="normal"
-                in2="BackgroundImageFix"
-                result="effect1_dropShadow_35_567"
-              />
-              <feBlend
-                mode="normal"
-                in="SourceGraphic"
-                in2="effect1_dropShadow_35_567"
-                result="shape"
-              />
-            </filter>
-            <filter
-              id="filter2_d_35_567"
-              x="0.125488"
-              y="3.07458"
-              width="62.0005"
-              height="62"
-              filterUnits="userSpaceOnUse"
-              color-interpolation-filters="sRGB"
-            >
-              <feFlood flood-opacity="0" result="BackgroundImageFix" />
-              <feColorMatrix
-                in="SourceAlpha"
-                type="matrix"
-                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                result="hardAlpha"
-              />
-              <feMorphology
-                radius="1"
-                operator="dilate"
-                in="SourceAlpha"
-                result="effect1_dropShadow_35_567"
-              />
-              <feOffset />
-              <feGaussianBlur stdDeviation="3.5" />
-              <feComposite in2="hardAlpha" operator="out" />
-              <feColorMatrix
-                type="matrix"
-                values="0 0 0 0 0.101667 0 0 0 0 0.101667 0 0 0 0 0.101667 0 0 0 1 0"
-              />
-              <feBlend
-                mode="normal"
-                in2="BackgroundImageFix"
-                result="effect1_dropShadow_35_567"
-              />
-              <feBlend
-                mode="normal"
-                in="SourceGraphic"
-                in2="effect1_dropShadow_35_567"
-                result="shape"
-              />
-            </filter>
-            <filter
-              id="filter3_d_35_567"
-              x="15.1255"
-              y="1.97131"
-              width="64"
-              height="64"
-              filterUnits="userSpaceOnUse"
-              color-interpolation-filters="sRGB"
-            >
-              <feFlood flood-opacity="0" result="BackgroundImageFix" />
-              <feColorMatrix
-                in="SourceAlpha"
-                type="matrix"
-                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                result="hardAlpha"
-              />
-              <feMorphology
-                radius="1"
-                operator="dilate"
-                in="SourceAlpha"
-                result="effect1_dropShadow_35_567"
-              />
-              <feOffset />
-              <feGaussianBlur stdDeviation="3.5" />
-              <feComposite in2="hardAlpha" operator="out" />
-              <feColorMatrix
-                type="matrix"
-                values="0 0 0 0 0.101667 0 0 0 0 0.101667 0 0 0 0 0.101667 0 0 0 1 0"
-              />
-              <feBlend
-                mode="normal"
-                in2="BackgroundImageFix"
-                result="effect1_dropShadow_35_567"
-              />
-              <feBlend
-                mode="normal"
-                in="SourceGraphic"
-                in2="effect1_dropShadow_35_567"
-                result="shape"
-              />
-            </filter>
-            <filter
-              id="filter4_d_35_567"
-              x="33.124"
-              y="0"
-              width="68"
-              height="68"
-              filterUnits="userSpaceOnUse"
-              color-interpolation-filters="sRGB"
-            >
-              <feFlood flood-opacity="0" result="BackgroundImageFix" />
-              <feColorMatrix
-                in="SourceAlpha"
-                type="matrix"
-                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                result="hardAlpha"
-              />
-              <feMorphology
-                radius="1"
-                operator="dilate"
-                in="SourceAlpha"
-                result="effect1_dropShadow_35_567"
-              />
-              <feOffset />
-              <feGaussianBlur stdDeviation="3.5" />
-              <feComposite in2="hardAlpha" operator="out" />
-              <feColorMatrix
-                type="matrix"
-                values="0 0 0 0 0.101667 0 0 0 0 0.101667 0 0 0 0 0.101667 0 0 0 1 0"
-              />
-              <feBlend
-                mode="normal"
-                in2="BackgroundImageFix"
-                result="effect1_dropShadow_35_567"
-              />
-              <feBlend
-                mode="normal"
-                in="SourceGraphic"
-                in2="effect1_dropShadow_35_567"
-                result="shape"
-              />
-            </filter>
-          </defs>
-        </svg>
+      <svg width="219" height="132" viewBox="0 0 219 132" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="219" height="131.4" rx="7" fill="#494646" fill-opacity="0.25"/>
+</svg>
+
       </div>
       <h1 className="text-center">{data.date}</h1>
     </Link>
@@ -491,20 +264,19 @@ const Project = ({ data }) => {
 const Chome = () => {
   return (
     <>
+    
       <div className="w-full h-screen">
         <aside className="top-0 left-0 bg-zinc-900 h-screen fixed md:text-sm sm:text-sm">
-          <ProfileSection />
+          <Sidebar />
         </aside>
+        <div className="absolute w-72 h-72 bg-zinc-600 rounded-full mix-blend-screen blur-3xl opacity-30 bottom-0 left-0 animate-pulse" />
+  <div className="absolute w-72 h-72 bg-purple-700 rounded-full mix-blend-screen blur-3xl opacity-30 bottom-0 right-10 animate-pulse" />
+  <div className="absolute w-72 h-72 bg-green-700 rounded-full mix-blend-screen blur-3xl opacity-20 top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse" />
+
         <div className="sm:ml-[32%] mt-5 lg:ml-[20%]">
-          <div className=" flex flex-row flex-wrap ">
-            <AddProject />
-            {Data.map((element, index) => (
-              <div className="">
-                <Project key={index} data={element} />
-              </div>
-            ))}
-          </div>
-          <Footer />
+            <Link to='/addproject' className="my-5 rounded-sm"><AddProject/></Link>
+            <Dashboard />
+          
         </div>
       </div>
     </>
