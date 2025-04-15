@@ -1,6 +1,11 @@
 import React from 'react';
 import { Mail, Linkedin, Instagram, X } from 'lucide-react';
 import {Link} from 'react-router-dom';
+import logo from '../../assets/logo.svg';
+import linkedin from '../../assets/linkedin.svg';
+import instagram from '../../assets/instagram.svg';
+import twitter from '../../assets/twitter.svg';
+
 const Footer = () => {
   return (
     <footer className="bg-black text-white pt-12 pb-6 px-4">
@@ -11,32 +16,19 @@ const Footer = () => {
           <div className="flex items-center mb-4 space-x-2">
             {/* Placeholder logo */}
             <span className="text-lg font-semibold">
-          <div className="flex flex-col">
-            <div className="flex">
-              <div className="bg-zinc flex items-center justify-center">
-                <svg width="50" height="50" viewBox="0 0 100 100">
-                  <g transform="translate(50,50)">
-                    <circle cx="0" cy="-30" r="7" fill="#E0FFFF" />
-                    <path d="M -25,10 L 0,-10 L 25,10" stroke="#E0FFFF" strokeWidth="8" strokeLinecap="round" />
-                  </g>
-                  <g transform="translate(50,50) rotate(90)">
-                    <circle cx="0" cy="-30" r="7" fill="#ADD8E6" />
-                    <path d="M -25,10 L 0,-10 L 25,10" stroke="#ADD8E6" strokeWidth="8" strokeLinecap="round" />
-                  </g>
-                  <g transform="translate(50,50) rotate(180)">
-                    <circle cx="0" cy="-30" r="7" fill="#9370DB" />
-                    <path d="M -25,10 L 0,-10 L 25,10" stroke="#9370DB" strokeWidth="8" strokeLinecap="round" />
-                  </g>
-                  <g transform="translate(50,50) rotate(270)">
-                    <circle cx="0" cy="-30" r="7" fill="#D8BFD8" />
-                    <path d="M -25,10 L 0,-10 L 25,10" stroke="#D8BFD8" strokeWidth="8" strokeLinecap="round" />
-                  </g>
-                </svg>
+              <div className="flex flex-col">
+                <div className="flex">
+                  <div className="bg-zinc flex items-center justify-center">
+                  <Link to="/" className="flex items-center space-x-2">
+                    <img src={logo} alt="Logo" className="w-8 h-8 rounded-full" />
+                  </Link>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </span>
-            <span className="font-bold text-lg">SKRIL</span>
+            </span>
+            <span className="text-white text-[30px] font-bold ml-2 font-montserrat">
+              SKRIL
+            </span>
           </div>
           <p className="text-sm text-zinc-400 mb-2">
             Our vision is to empower content teams with smart, intuitive collaboration tools.
@@ -44,10 +36,16 @@ const Footer = () => {
           <p className="text-sm text-zinc-400 mb-4">
             Our mission is to streamline video creation by uniting creators, writers, and editors.
           </p>
-          <div className="flex items-center gap-3">
-            <a href="#" className="text-white p-2 bg-zinc-800 rounded-full hover:bg-zinc-700"><Linkedin size={16} /></a>
-            <a href="#" className="text-white p-2 bg-zinc-800 rounded-full hover:bg-zinc-700"><Instagram size={16} /></a>
-            <a href="#" className="text-white p-2 bg-zinc-800 rounded-full hover:bg-zinc-700"><X size={16} /></a>
+          <div className="flex gap-[10px] mt-6">
+            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">
+              <img src={linkedin} alt="LinkedIn" className="w-35 h-35 hover:opacity-80 transition" />
+            </a>
+            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+              <img src={instagram} alt="Instagram" className="w-35 h-35 hover:opacity-80 transition" />
+            </a>
+            <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">
+              <img src={twitter} alt="Twitter" className="w-35 h-35 hover:opacity-80 transition" />
+            </a>
           </div>
         </div>
 
@@ -58,7 +56,6 @@ const Footer = () => {
             <Link to='/create' className='flex'>Dashboard</Link>
             <Link to='/addproject' className='flex'><a href="#">Create Project</a></Link>
             <Link className='flex'><a href="#">Team Members</a></Link>
-           
             <Link className='flex' to='/settings'><a href="#">Settings</a></Link>
           </ul>
         </div>
@@ -100,32 +97,19 @@ const Footer = () => {
         <div className="flex items-center mt-2 md:mt-0 space-x-2">
           {/* Repeating logo */}
           <span className="text-lg font-semibold">
-          <div className="flex flex-col">
-            <div className="flex">
-              <div className="bg-zinc flex items-center justify-center">
-                <svg width="50" height="50" viewBox="0 0 100 100">
-                  <g transform="translate(50,50)">
-                    <circle cx="0" cy="-30" r="7" fill="#E0FFFF" />
-                    <path d="M -25,10 L 0,-10 L 25,10" stroke="#E0FFFF" strokeWidth="8" strokeLinecap="round" />
-                  </g>
-                  <g transform="translate(50,50) rotate(90)">
-                    <circle cx="0" cy="-30" r="7" fill="#ADD8E6" />
-                    <path d="M -25,10 L 0,-10 L 25,10" stroke="#ADD8E6" strokeWidth="8" strokeLinecap="round" />
-                  </g>
-                  <g transform="translate(50,50) rotate(180)">
-                    <circle cx="0" cy="-30" r="7" fill="#9370DB" />
-                    <path d="M -25,10 L 0,-10 L 25,10" stroke="#9370DB" strokeWidth="8" strokeLinecap="round" />
-                  </g>
-                  <g transform="translate(50,50) rotate(270)">
-                    <circle cx="0" cy="-30" r="7" fill="#D8BFD8" />
-                    <path d="M -25,10 L 0,-10 L 25,10" stroke="#D8BFD8" strokeWidth="8" strokeLinecap="round" />
-                  </g>
-                </svg>
+            <div className="flex flex-col">
+              <div className="flex">
+                <div className="bg-zinc flex items-center justify-center">
+                  <Link to="/" className="flex items-center space-x-2">
+                    <img src={logo} alt="Logo" className="w-8 h-8 rounded-full" />
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        </span>
-          <span className="text-white font-semibold">SKRIL</span>
+          </span>
+          <span className="text-white text-[30px] font-bold ml-2 font-montserrat">
+            SKRIL
+          </span>
         </div>
       </div>
     </footer>

@@ -2,8 +2,25 @@ import React from 'react';
 import { FaRegUserCircle, FaTh, FaPlusSquare,  FaUsers, FaCog } from 'react-icons/fa';
 import { FaLinkedinIn, FaInstagram, FaX } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { supabase } from '../../supabaseClient';
+import logo from '../../assets/logo.svg';
+import linkedin from '../../assets/linkedin.svg';
+import instagram from '../../assets/instagram.svg';
+import twitter from '../../assets/twitter.svg';
 
 const Sidebar = () => {
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      setUser(user)
+    }
+
+    getUser()
+  }, [])
+
   return (
     <div className="flex flex-col h-screen w-64 bg-gradient-to-b from-zinc-900 to-zinc-700 text-white">
       {/* Top Section */}
@@ -12,24 +29,9 @@ const Sidebar = () => {
           <div className="flex flex-col">
             <div className="flex">
               <div className="bg-zinc flex items-center justify-center">
-                <svg width="50" height="50" viewBox="0 0 100 100">
-                  <g transform="translate(50,50)">
-                    <circle cx="0" cy="-30" r="7" fill="#E0FFFF" />
-                    <path d="M -25,10 L 0,-10 L 25,10" stroke="#E0FFFF" strokeWidth="8" strokeLinecap="round" />
-                  </g>
-                  <g transform="translate(50,50) rotate(90)">
-                    <circle cx="0" cy="-30" r="7" fill="#ADD8E6" />
-                    <path d="M -25,10 L 0,-10 L 25,10" stroke="#ADD8E6" strokeWidth="8" strokeLinecap="round" />
-                  </g>
-                  <g transform="translate(50,50) rotate(180)">
-                    <circle cx="0" cy="-30" r="7" fill="#9370DB" />
-                    <path d="M -25,10 L 0,-10 L 25,10" stroke="#9370DB" strokeWidth="8" strokeLinecap="round" />
-                  </g>
-                  <g transform="translate(50,50) rotate(270)">
-                    <circle cx="0" cy="-30" r="7" fill="#D8BFD8" />
-                    <path d="M -25,10 L 0,-10 L 25,10" stroke="#D8BFD8" strokeWidth="8" strokeLinecap="round" />
-                  </g>
-                </svg>
+                <Link to="/">
+                  <img src={logo} alt="SKRIL logo" width={40} height={40} />
+                </Link>              
               </div>
             </div>
           </div>
@@ -37,11 +39,25 @@ const Sidebar = () => {
       </div>
       <div className="p-4">
         <div className="flex items-center space-x-2">
-          <FaRegUserCircle className="text-gray-400" />
-          <div>
-            <p className="text-sm">Bhumil Rangholiya</p>
-            <p className="text-xs text-gray-400">bhumi.rangholiya@gmail.com</p>
-          </div>
+          {user ? (
+            <div className="flex items-center space-x-2">
+              {user.user_metadata?.avatar_url ? (
+                <img
+                  src={user.user_metadata.avatar_url}
+                  alt="Profile"
+                  className="w-10 h-10 rounded-full"
+                />
+              ) : (
+                <FaRegUserCircle className="text-gray-400 text-2xl" />
+              )}
+              <div>
+                <p className="text-sm">{user.user_metadata?.full_name || 'Creator'}</p>
+                <p className="text-xs text-gray-400">{user.email}</p>
+              </div>
+            </div>
+          ) : (
+            <div className="text-sm text-gray-400">Not logged in</div>
+          )}
         </div>
       </div>
 
@@ -49,25 +65,20 @@ const Sidebar = () => {
       <div className="flex-1 p-4">
         <ul>
           <Link className="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-md" to="/create">
-           
               <FaTh className="text-gray-400" />
               <span>Dashboard</span>
             </Link>
           <Link className="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-md" to="/addproject">
               <FaPlusSquare className="text-gray-400" />
               <span>Create Project</span>
-           
           </Link>
-         
           <li className="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-md">
             <FaUsers className="text-gray-400" />
             <span>Team Members</span>
           </li>
-          <Link className="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-md"
-             to="/settings">
+          <Link className="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-md" to="/settings">
               <FaCog className="text-gray-400" />
               <span>Settings</span>
-           
           </Link>
         </ul>
       </div>
@@ -79,34 +90,28 @@ const Sidebar = () => {
             <div className="flex flex-col">
               <div className="flex">
                 <div className="bg-zinc flex items-center justify-center">
-                  <svg width="50" height="50" viewBox="0 0 100 100">
-                    <g transform="translate(50,50)">
-                      <circle cx="0" cy="-30" r="7" fill="#E0FFFF" />
-                      <path d="M -25,10 L 0,-10 L 25,10" stroke="#E0FFFF" strokeWidth="8" strokeLinecap="round" />
-                    </g>
-                    <g transform="translate(50,50) rotate(90)">
-                      <circle cx="0" cy="-30" r="7" fill="#ADD8E6" />
-                      <path d="M -25,10 L 0,-10 L 25,10" stroke="#ADD8E6" strokeWidth="8" strokeLinecap="round" />
-                    </g>
-                    <g transform="translate(50,50) rotate(180)">
-                      <circle cx="0" cy="-30" r="7" fill="#9370DB" />
-                      <path d="M -25,10 L 0,-10 L 25,10" stroke="#9370DB" strokeWidth="8" strokeLinecap="round" />
-                    </g>
-                    <g transform="translate(50,50) rotate(270)">
-                      <circle cx="0" cy="-30" r="7" fill="#D8BFD8" />
-                      <path d="M -25,10 L 0,-10 L 25,10" stroke="#D8BFD8" strokeWidth="8" strokeLinecap="round" />
-                    </g>
-                  </svg>
-                  SKRIL
+                <Link to="/">
+                  <img src={logo} alt="SKRIL logo" width={35} height={35} />
+                </Link>
+                  <span className="text-white text-[38px] font-bold ml-2 font-montserrat">
+                    SKRIL
+                  </span>
                 </div>
               </div>
             </div>
           </span>
-          <div className="flex space-x-4 mt-2">
-            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"><FaLinkedinIn className="text-gray-400 hover:text-white" /></a>
-            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><FaInstagram className="text-gray-400 hover:text-white" /></a>
-            <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer"><FaX className="text-gray-400 hover:text-white" /></a>
+          <div className="flex gap-[9px] mt-6">
+            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">
+              <img src={linkedin} alt="LinkedIn" className="w-30 h-30 hover:opacity-80 transition" />
+            </a>
+            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+              <img src={instagram} alt="Instagram" className="w-30 h-30 hover:opacity-80 transition" />
+            </a>
+            <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">
+              <img src={twitter} alt="Twitter" className="w-30 h-30 hover:opacity-80 transition" />
+            </a>
           </div>
+          <hr className="w-full border-t border-[#C3C0C0] mt-4 mb-2" />
           <p className="text-xs text-gray-400 mt-2">© 2025 SKRIL All Rights Reserved</p>
         </div>
       </div>
