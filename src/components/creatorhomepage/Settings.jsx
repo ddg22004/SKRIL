@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import Sidebar from './Sidebar';
+import { supabase } from '../../supabaseClient';
+import { useNavigate } from 'react-router-dom';
 
 const SettingsPage = () => {
   const [autoPost, setAutoPost] = useState(true);
@@ -8,6 +10,12 @@ const SettingsPage = () => {
     tiktok: false,
     instagram: false,
   });
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate("/");
+  };
 
   const togglePlatform = (platform) => {
     setConnectedPlatforms((prev) => ({
@@ -99,6 +107,17 @@ const SettingsPage = () => {
               </button>
             </form>
           </div>
+
+          {/*Logout Button */}
+          <div className="bg-zinc-900 p-6 rounded-2xl shadow hover:shadow-lg transition-shadow text-center">
+            <button
+              onClick={handleLogout}
+              className="bg-red-600 hover:bg-red-500 transition-colors px-6 py-3 rounded-lg font-semibold text-white"
+            >
+              Logout
+            </button>
+          </div>
+
         </div>
       </main>
     </div>
