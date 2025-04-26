@@ -11,6 +11,7 @@ function md5(string) {
   });
 }
 
+
 const AddprojectForm = () => {
   const [projectName, setProjectName] = useState("");
   const [creator, setCreator] = useState(null);
@@ -19,6 +20,7 @@ const AddprojectForm = () => {
   const [editors, setEditors] = useState([{ email: "" }]);
   const [rawVideos, setRawVideos] = useState([]);
   const navigate = useNavigate();
+  const [uploadProgress, setUploadProgress] = useState({});
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
@@ -37,12 +39,61 @@ const AddprojectForm = () => {
     return `https://www.gravatar.com/avatar/${hash}?d=identicon`;
   };
 
+  const uploadRawVideos = async (projectId, videos) => {
+    const uploadedUrls = [];
+  
+    for (const file of videos) {
+      const filePath = `${projectId}/${Date.now()}-${file.name}`;
+  
+      // Step 1: Get signed upload URL from Supabase
+      const { data: signedData, error: signedError } = await supabase
+        .storage
+        .from("raw-videos")
+        .createSignedUploadUrl(filePath, 60);
+  
+      if (signedError) {
+        console.error("Signed URL error:", signedError);
+        continue;
+      }
+  
+      const totalSize = file.size;
+      let uploaded = 0;
+  
+      // Step 2: Create a progress-tracking ReadableStream
+      const stream = file.stream().pipeThrough(new TransformStream({
+        transform(chunk, controller) {
+          uploaded += chunk.length;
+          const progressPercent = Math.round((uploaded / totalSize) * 100);
+          setUploadProgress(prev => ({ ...prev, [file.name]: progressPercent }));
+          controller.enqueue(chunk);
+        }
+      }));
+  
+      // Step 3: Upload with fetch
+      const response = await fetch(signedData.signedUrl, {
+        method: "PUT",
+        headers: { "Content-Type": file.type },
+        body: stream,
+      });
+  
+      if (response.ok) {
+        const { data: urlData } = supabase.storage.from("raw-videos").getPublicUrl(filePath);
+        uploadedUrls.push(urlData.publicUrl);
+      } else {
+        console.error("Upload failed for:", file.name);
+      }
+    }
+  
+    return uploadedUrls;
+  };  
+  
   const handleSave = async (e) => {
     e.preventDefault();
     if (!uploadingDate || !projectName) {
       alert("Please fill out all fields before saving.");
       return;
     }
+  
     const formattedWriters = await Promise.all(
       contentWriters.filter(w => w.email).map(async (writer) => ({
         email: writer.email,
@@ -50,6 +101,7 @@ const AddprojectForm = () => {
         avatar: await getGravatar(writer.email),
       }))
     );
+  
     const formattedEditors = await Promise.all(
       editors.filter(e => e.email).map(async (editor) => ({
         email: editor.email,
@@ -57,7 +109,9 @@ const AddprojectForm = () => {
         avatar: await getGravatar(editor.email),
       }))
     );
-    const { error } = await supabase.from("projects").insert({
+  
+    // Step 1: Save project
+    const { data, error } = await supabase.from("projects").insert({
       name: projectName,
       creator_name: creator?.name,
       creator_email: creator?.email,
@@ -66,14 +120,42 @@ const AddprojectForm = () => {
       editors: formattedEditors,
       uploading_date: uploadingDate,
       deadline: uploadingDate,
-    });
+    }).select().single();
+  
     if (error) {
       alert("Error saving project: " + error.message);
+      return;
+    }
+  
+    console.log("Project saved:", data);
+  
+    // Step 2: Upload videos (if any)
+    if (data && rawVideos.length > 0) {
+      const videoUrls = await uploadRawVideos(data.id, rawVideos);
+      console.log("Uploaded video URLs:", videoUrls);
+  
+      if (videoUrls.length > 0) {
+        const { error: updateError } = await supabase
+          .from("projects")
+          .update({ raw_video_urls: videoUrls })
+          .eq("id", data.id);
+  
+        if (updateError) {
+          alert("Videos uploaded but failed to link to project.");
+          console.error("Update error:", updateError);
+        } else {
+          alert("Project and videos saved!");
+          navigate("/create");
+        }
+      } else {
+        alert("Video upload failed. Project saved without videos.");
+      }
     } else {
-      alert("Project added!");
+      alert("Project saved!");
       navigate("/create");
     }
   };
+  
 
   return (
     <div style={{ width: '100%', height: '100vh', position: 'relative', background: '#0C0C0C', overflowY: 'auto' }}>
@@ -188,9 +270,35 @@ const AddprojectForm = () => {
             id="video-upload"
             type="file"
             multiple
-            onChange={(e) => setRawVideos([...e.target.files])}
+            onChange={(e) => {
+              const files = Array.from(e.target.files);
+              setRawVideos(files);
+              setUploadProgress({}); // reset progress bar state on new selection
+            }}
             style={{ display: 'none' }}
           />
+
+          {rawVideos.length > 0 && (
+            <ul style={{ color: '#E1DFDF', marginTop: 10 }}>
+              {rawVideos.map((file, index) => (
+                <li key={index}>
+                  {file.name}
+                  {uploadProgress[file.name] != null && (
+                    <div style={{ background: '#444', borderRadius: 5, overflow: 'hidden', marginTop: 5 }}>
+                      <div
+                        style={{
+                          width: `${uploadProgress[file.name]}%`,
+                          background: '#7264BB',
+                          height: 6,
+                          transition: 'width 0.3s'
+                        }}
+                      />
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
 
           <div style={{ display: 'flex', gap: 20, marginTop: 40, marginBottom: 60 }}>
             <Link
