@@ -99,7 +99,7 @@ return (
                     borderRadius: "50%",
                     background: `url(${writer.avatar}) center/cover`,
                     boxShadow: "0px 0px 6px 1px #1A1A1A",
-                    zIndex: 1,
+                    zIndex: 1 - i,
                     }}
                 ></div>
                 ))}
@@ -131,7 +131,7 @@ return (
                     borderRadius: "50%",
                     background: `url(${editor.avatar}) center/cover`,
                     boxShadow: "0px 0px 6px 1px #1A1A1A",
-                    zIndex: 1,
+                    zIndex: 1 - i,
                     }}
                 ></div>
                 ))}
